@@ -25,16 +25,17 @@ def seats(bus_num):
     all_passengers = read_write.searchPassengers(bus_num)
     return jsonify(all_passengers)
 
-@app.route("/hotel/reservation", methods=["POST"])
+@app.route("/hotel/reservation", methods=["GET", "POST"])
 def reservation():
-    if request.method == "POST":
-        data = request.json
-        hotel_id = data.get("hotel_id")
-        name = data.get("name")
-        bus_number = data.get("bus_number")
-        room_number = data.get("room_number")
-        read_write.append("passengers", ["ID_Hotel","Name","Bus_Number","Room_Number"], [hotel_id, name, bus_number, room_number])
-    return jsonify({"message": "Reserva realizada exitosamente"})
+    #if request.method == "POST":
+    data = request.get_json()
+    hotel_id = data.get("hotel_id")
+    name = data.get("name")
+    bus_number = data.get("bus_number")
+    room_number = data.get("room_number")
+    print("recivido")
+    read_write.append("passengers", [hotel_id, name, bus_number, room_number])
+    return jsonify({"message": "Reserva realizada exitosamente"}), 200
 
 if __name__ == "__main__":
     app.run()

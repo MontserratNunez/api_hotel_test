@@ -1,5 +1,4 @@
 import csv
-import os
 
 def write(name, columns):
     """Write the header of a file with the values of the arguments"""
@@ -7,12 +6,13 @@ def write(name, columns):
         writer = csv.DictWriter(file, fieldnames=columns)
         writer.writeheader()
 
-def append(name, columns, values):
+def append(name, values):
     """Appends the values to a file with the name argument"""
     with open(f".\\information\\{name}.csv", "a", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=columns)
-        for value in values:
-            writer.writerow(value)
+        writer = csv.writer(file)
+        writer.writerow(values)
+
+    print("Hecho")
 
 def read(name):
     """Read the file with the name argument"""
@@ -55,14 +55,9 @@ def searchPassengers(bus_num):
     passengers = []
     for passenger in all_passengers:
         if passenger["Bus_Number"] == bus_num:
-            passengers.append(passenger["Name"], passenger["Bus_Number"], passenger["Room_Number"])
+            passengers.append([passenger["Name"], passenger["Bus_Number"], passenger["Room_Number"]])
         elif index == len(all_passengers) - 1:
             return "Error"
         else:
             index += 1
     return passengers
-
-def checkout():
-    for room in all_rooms:
-        if room["ID_Room"] == room_id:
-            hotel_rooms.append([room["ID_Room"], room["Type"], room["Number"], room["Price"], room["Status"]])
