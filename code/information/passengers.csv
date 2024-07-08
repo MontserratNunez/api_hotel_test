@@ -1,0 +1,33 @@
+ID_Hotel,Name,Bus_Number,Room_Number
+1,Carlos Gómez,11,101
+1,Pedro Jiménez,11,102
+1,Marcos González,11,201
+1,Marta Rodríguez,10,101
+2,Ana Martínez,12,102
+2,Laura Pérez,12,201
+2,Daniela Martínez,12,101
+3,Luis Fernández,13,201
+3,Diego Morales,23,101
+3,Pablo Ramírez,23,102
+3,Elena Ruiz,20,102
+3,Roberto Ruiz,20,102
+4,María López,14,201
+4,Clara López,14,201
+4,Manuel López,14,201
+4,Andrea Sánchez,14,203
+4,José Pérez,105,102
+5,Julio Navarro,02,101
+6,Lucía García,06,201
+6,Isabel Fernández,06,101
+6,Lucía Soto,06,102
+7,Raúl Sánchez,07,101
+7,Ricardo Torres,08,102
+8,Elena Torres,08,102
+7,Alberto Molina,17,201
+7,Javier Díaz,09,201
+8,Sara Romero,08,101
+8,Patricia Díaz,18,201
+8,Fernando García,19,101
+8,Carmen Castro,19,102
+
+
