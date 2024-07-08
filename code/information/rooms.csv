@@ -26,6 +26,6 @@ ID_Room,ID_Hotel,Type,Number,Price,Status
 25,5,Individual,101,50.00,Disponible
 26,5,Doble,102,75.00,No disponible
 27,6,Suite,201,120.00,Disponible
-28,1,Individual,101,55.00,Disponible
-29,2,Doble,102,80.00,No disponible
-30,3,Suite,201,125.00,Disponible
+28,1,Individual,103,55.00,Disponible
+29,2,Doble,103,80.00,No disponible
+30,3,Suite,203,125.00,Disponible
