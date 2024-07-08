@@ -1,6 +1,19 @@
 import csv
 import os
 
+def write(name, columns):
+    """Write the header of a file with the values of the arguments"""
+    with open(f".\\information\\{name}.csv", "w", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=columns)
+        writer.writeheader()
+
+def append(name, columns, values):
+    """Appends the values to a file with the name argument"""
+    with open(f".\\information\\{name}.csv", "a", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=columns)
+        for value in values:
+            writer.writerow(value)
+
 def read(name):
     """Read the file with the name argument"""
     info = []
@@ -20,11 +33,10 @@ def infoHotel(hotel_id):
         if hotel["ID_Hotel"] == hotel_id:
             return hotel
         elif index == len(all_hotels) - 1:
-            return "El id ingresado no corresponde a ningún hotel"
+            return "Error"
         else:
             index += 1
 
-#Query habitaciones disponibles
 def searchRooms(hotel_id):
     index = 0
     hotel_rooms = []
@@ -32,7 +44,7 @@ def searchRooms(hotel_id):
         if room["ID_Hotel"] == hotel_id:
             hotel_rooms.append([room["ID_Room"], room["Type"], room["Number"], room["Price"], room["Status"]])
         elif index == len(all_rooms) - 1:
-            return "El id ingresado no corresponde a ningún hotel"
+            return "Error"
         else:
             index += 1
     return hotel_rooms
@@ -45,10 +57,12 @@ def searchPassengers(bus_num):
         if passenger["Bus_Number"] == bus_num:
             passengers.append(passenger["Name"], passenger["Bus_Number"], passenger["Room_Number"])
         elif index == len(all_passengers) - 1:
-            return "No se han encontrado pasajeros para el autobus seleccionado"
+            return "Error"
         else:
             index += 1
     return passengers
 
-#searchPassengersdos("12")
-#print(all_hotels["ID_Hotel"])
+def checkout():
+    for room in all_rooms:
+        if room["ID_Room"] == room_id:
+            hotel_rooms.append([room["ID_Room"], room["Type"], room["Number"], room["Price"], room["Status"]])
