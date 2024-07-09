@@ -36,7 +36,7 @@ def hotel_info():
             break
 
 def room_info():
-    """Shows the rooms that the selected hotel has"""
+    """Shows the rooms that the selected hotel have"""
     while True:
         print("Escriba 'volver' o 'v' para volver atrás.")
         hotel_id = input(dialog("1. Ingrese el id de un hotel."))

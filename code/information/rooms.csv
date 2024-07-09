@@ -1,3 +1,36 @@
+<<<<<<< HEAD
+ID_Room,ID_Hotel,Type,Number,Price,Status
+1,1,Individual,101,50.00,Disponible
+2,1,Doble,102,75.00,No disponible
+3,1,Suite,201,120.00,Disponible
+4,2,Individual,101,55.00,Disponible
+5,2,Doble,102,80.00,No disponible
+6,2,Suite,201,125.00,Disponible
+7,3,Individual,101,60.00,No disponible
+8,3,Doble,102,85.00,Disponible
+9,3,Suite,201,130.00,Disponible
+10,4,Individual,101,50.00,No disponible
+11,4,Doble,102,70.00,Disponible
+12,4,Suite,201,110.00,Disponible
+13,5,Individual,101,45.00,Disponible
+14,5,Doble,102,65.00,No disponible
+15,5,Suite,201,100.00,Disponible
+16,6,Individual,101,50.00,Disponible
+17,6,Doble,102,75.00,No disponible
+18,6,Suite,201,120.00,Disponible
+19,7,Individual,101,55.00,No disponible
+20,7,Doble,102,80.00,Disponible
+21,7,Suite,201,125.00,Disponible
+22,8,Individual,101,60.00,Disponible
+23,8,Doble,102,85.00,No disponible
+24,8,Suite,201,130.00,Disponible
+25,5,Individual,101,50.00,Disponible
+26,5,Doble,102,75.00,No disponible
+27,6,Suite,201,120.00,Disponible
+28,1,Individual,103,55.00,Disponible
+29,2,Doble,103,80.00,No disponible
+30,3,Suite,203,125.00,Disponible
+=======
 ID_Room,ID_Hotel,Type,Number,Price,Status
 1,1,Individual,101,50.00,Disponible
 2,1,Doble,102,75.00,No disponible
