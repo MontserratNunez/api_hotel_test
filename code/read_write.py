@@ -1,4 +1,5 @@
 import csv
+import os
 
 def write(name, columns):
     """Write the header of a file with the values of the arguments"""
@@ -11,8 +12,6 @@ def append(name, values):
     with open(f".\\information\\{name}.csv", "a", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(values)
-
-    print("Hecho")
 
 def read(name):
     """Read the file with the name argument"""

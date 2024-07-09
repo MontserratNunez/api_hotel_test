@@ -2,10 +2,10 @@ import requests
 from colorama import Fore, Style, init
 
 init()
+url = "http://127.0.0.1:5000"
 
 def fetch(endpoint):
     """Collects the data from the api"""
-    url = "http://127.0.0.1:5000"
     try:
         response = requests.get(url + endpoint, timeout=10)
         if response.status_code == 200:
@@ -13,7 +13,7 @@ def fetch(endpoint):
             return data
         print(error("La opción ingresada no es válida"))
     except Exception:
-        print(error("Error de conexion, intentelo de nuevo"))
+        print(error("Error de conexion, inténtelo de nuevo"))
 
 def hotels():
     """Shows all the names of all the hotels"""
@@ -35,8 +35,8 @@ def hotel_info():
             print(error("El id ingresado no corresponde a ningún hotel"))
             break
 
-def reserve():
-    """Allows the user to make a reservation in the selected hotel"""
+def room_info():
+    """Shows the rooms that the selected hotel has"""
     while True:
         print("Escriba 'volver' o 'v' para volver atrás.")
         hotel_id = input(dialog("1. Ingrese el id de un hotel."))
@@ -49,35 +49,43 @@ def reserve():
         else: 
             print(error("El id ingresado no corresponde a ningún hotel"))
             break
-        reservation = input(dialog("2. Escriba 'reservar' o 'r' para reservar"))
-        if reservation not in ("reservar", "r"):
-            print("La opción ingresada es inválida")
+
+def reserve():
+    """Allows the user to make a reservation"""
+    hotel_id = input(dialog("1. Ingrese el id de un hotel: "))
+    while True:
+        room = input(dialog("2. Ingresa el numero de la habitación: "))
+        if is_available(room, hotel_id):
             break
-        room = input(dialog("3.Ingresa el numero de la habitacion: "))
-        names = []
-        print(dialog("4. Escriba el nombre y apellido de cada pasajero."))
-        while True:
-            name = input("Ingresa un nombre y apellido O escriba 'finalizar' o 'f' si ya no hay mas pasajeros:\n")
-            if name in ("finalizar", "f"):
-                break
-            names.append(name)
-        print(dialog("5. Seleccione un autobus."))
-        while True:
-            bus = input("Se encuentran disponibles los siguientes autobuses:\n[2], [6], [8], [9], [11], [12] [13], [14], [20], [23]\nS")
-            if bus in ("2", "6", "8", "9", "11", "12", "13", "14", "20", "23"):
-                break
-            print(error("El autobús elegido no se encuentra disponible"))
-        print("6. Confirme su reserva.")
-        while True:
-            reserva = input(f"Datos de reserva:\nID del hotel: {hotel_id}\nNúmero de habitación: {room}\nPasajeros: {names}\nNúmero de autobús: {bus}\n¿Es correcto? [si/no] ")
-            if reserva == "si":
-                send_reservation(hotel_id, names, room , bus)
-                break
-            elif reserva == "no":
-                print(dialog("Reserva cancelada"))
-                break
-            else:
-                print(error("La opcion ingresada no es valida"))
+        print(error("La habitación seleccionada no esta disponible"))
+    names = []
+    passengers_num = input(dialog("3. Cantidad de pasajeros: "))
+    print("Ingrese el nombre y apellido de cada pasajero.")
+    for i in range(passengers_num):
+        name = input("1. ")
+        names.append(name)
+    print(dialog("4. Seleccione un autobús."))
+    while True:
+        bus = input("Lista de autobuses disponibles:\n[2], [6], [8], [9], [11], [12] [13], [14], [20], [23]\n")
+        if bus in ("2", "6", "8", "9", "11", "12", "13", "14", "20", "23"):
+            break
+        print(error("El autobús elegido no se encuentra disponible"))
+    print("6. Confirme su reserva.")
+    while True:
+        print("Datos de reserva:")
+        print(f"ID del hotel: {hotel_id}")
+        print(f"Número de habitación: {room}")
+        print(f"Pasajeros: {names}")
+        print(f"Número de autobús: {bus}")
+        reserva = input(dialog("¿Es correcto? [si/no] "))
+        if reserva == "si":
+            send_reservation(hotel_id, names, room , bus)
+            break
+        elif reserva == "no":
+            print(dialog("Reserva cancelada"))
+            break
+        else:
+            print(error("La opción ingresada no es válida"))
 
 def send_reservation(hotel_id, names, room, bus):
     """Send the data of the reservation to store it"""
@@ -91,7 +99,7 @@ def send_reservation(hotel_id, names, room, bus):
                 "room_number": room
             }
             headers = {'Content-Type': 'application/json'}
-            response = requests.post("http://127.0.0.1:5000" + endpoint, json=body, headers=headers, timeout=10)
+            response = requests.post(url + endpoint, json=body, headers=headers, timeout=10)
             if response.status_code == 200:
                 print(dialog("Reserva enviada exitosamente"))
     except Exception:
@@ -106,9 +114,51 @@ def passengers_info():
         response = fetch(f"/hotel/bus/{bus_num}")
         if response and response != "Error":
             for r in response:
-                print(f"=======================\nNombre: {r[0]}\nNúmero de autobús: {r[1]}\nNúmero de habitación: {r[2]}\n=======================")
+                print("=========================")
+                print(f"Nombre: {r[0]}")
+                print(f"Número de autobús: {r[1]}")
+                print(f"Número de habitación: {r[2]}")
+                print("=========================")
         else:
             print(error("No se han encontrado pasajeros para el autobús seleccionado"))
+
+def details():
+    """Shows the details of the stay"""
+    while True:
+        hotel_id = input("1. Ingrese el ID del hotel: ")
+        room = input("2. Ingrese el número de habitación: ")
+        if room in ("volver", "v"):
+            break
+
+def do_checkout():
+    """Allows the user to checkout"""
+    hotel_id = input("1. Ingrese el ID del hotel: ")
+    room = input("2. Ingrese el número de habitación: ")
+    confirm = input("Confirmar checkout [si/no]: ")
+    while True:
+        if confirm == "si":
+            endpoint = "/hotel/checkout"
+            body = {
+                "hotel_id": hotel_id,
+                "room_number": room
+            }
+            headers = {'Content-Type': 'application/json'}
+            response = requests.post(url + endpoint, json=body, headers=headers, timeout=10)
+            if response.status_code == 200:
+                print(dialog("Checkout enviado exitosamente"))
+            break
+        elif confirm == "no":
+            break
+        else:
+            print(error("La opción ingresada no es válida"))
+
+def is_available(room_num, hotel_id):
+    """Checks if the room is available"""
+    rooms = fetch(f"/hotel/{hotel_id}/rooms")
+    for room in rooms:
+        if room[2] == room_num and room[4] == "Disponible":
+            return True
+    return False
 
 def error(error_message):
     """Retorns a red string"""
@@ -118,27 +168,32 @@ def dialog(dialog_message):
     """Retorns a yellow string"""
     return f"{Fore.YELLOW}{dialog_message}{Style.RESET_ALL}"
 
+def highlight(highlight_message):
+    """Retorns a yellow string"""
+    return f"{Fore.CYAN}{highlight_message}{Style.RESET_ALL}"
+
 if __name__ == "__main__":
     while True:
-        print(f"""=============================================================
-{Fore.CYAN}Bienvenido a Planea tu Viaje, seleccione una opción{Style.RESET_ALL}
-1. Ver hoteles disponibles.
-2. Consultar informacion de un hotel.
-3. Reservar una habitacion y asientos.
-4. Mostrar pasajeros de autobús.
-5. Detalles de estadia
-6. Checkout.
-7. Salir
-""")
+        print("=====================================================")
+        print(highlight("Bienvenido a Planea tu Viaje, seleccione una opción"))
+        print("1. Ver hoteles disponibles.")
+        print("2. Consultar informacion de un hotel.")
+        print("3. Reservar una habitacion y asientos.")
+        print("4. Mostrar pasajeros de autobús.")
+        print("5. Detalles de estadia.")
+        print("6. Checkout.")
+        print("7. Salir")
         option = input("Su opción: ")
         if option == "1":
             hotels()
         elif option == "2":
             hotel_info()
         elif option == "3":
-            reserve()
+            room_info()
         elif option == "4":
             passengers_info()
+        elif option == "6":
+            do_checkout()
         elif option == "7":
             break
         else:
